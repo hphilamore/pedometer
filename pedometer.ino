@@ -13,9 +13,9 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRB + NEO_KHZ800)
 //create accelerometer
 LSM303C myIMU;
 
-float x, y, z, w; 
-float threshold = 900;
-float thresholdPace = 0.003;
+float x, y, z; 
+float threshold = 3;
+float thresholdPace = 3;
 
 int steps, flag; //flag; // 
 long MeasurePeriod = 3000; 
@@ -42,15 +42,12 @@ void loop()
 x = float((myIMU.readAccelX()));
 y = float((myIMU.readAccelY()));
 z = float((myIMU.readAccelZ()));
-w = sqrt(sq(x)+sq(y)+sq(z));
 
 Serial.print(x);
 Serial.print("\t");
 Serial.print(y);
 Serial.print("\t");
-Serial.print(z);
-Serial.print("\t");
-Serial.println(w);
+Serial.println(z);
 
 delay(100);
 
