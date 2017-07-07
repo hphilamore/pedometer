@@ -1,3 +1,5 @@
+#include <Adafruit_NeoPixel.h>
+
 // I2C interface by default
 //
 #include "Wire.h"
@@ -5,13 +7,15 @@
 #include "SparkFunLSM303C.h"
 #include "LSM303CTypes.h"
 
-// #define DEBUG 1 in SparkFunLSM303C.h turns on debugging statements.
-// Redefine to 0 to turn them off.
+#define PIN 8
+#define NUM_LEDS 1
+//create a NeoPixel strip
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRB + NEO_KHZ800);
 
 LSM303C myIMU;
 
-int steps, flag;
 float x, y, z, w; 
+int steps, flag;
 float threshold = 900;
 
 //float y; 
@@ -21,13 +25,13 @@ float threshold = 900;
 void setup()
 {
   Serial.begin(115200);
+  strip.begin();
+  strip.show();
   if (myIMU.begin() != IMU_SUCCESS)
   {
     Serial.println("Failed setup.");
     while(1);
-  }
-  
-  pinMode(LED_BUILTIN, OUTPUT);
+  }  
 }
 
 void loop()
@@ -54,18 +58,24 @@ Serial.print("\t");
  Serial.print(z);
 Serial.print("\t");
   Serial.print(w);
-  Serial.print("\t");
+
 
 
   if (w>threshold && flag==0)
   {
     steps=steps+1;
+    
     flag=1;  
-    digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-    delay(200);                       // wait for a second
-    digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-    //delay(200);        
+
+     // light ON
+    strip.setPixelColor(0, 255, 0, 0);
+    strip.show();
+    delay(200);
+    // light OFF
+    strip.setPixelColor(0, 0, 0, 0);
+    strip.show();       
   }
+  
    else if (w > threshold && flag==1)
   {
     //do nothing 
@@ -76,31 +86,9 @@ Serial.print("\t");
     flag=0;
   }
 
-     Serial.println(steps);
-     
-//    Serial.println('\n');
-//    Serial.print("steps=");
-//    Serial.println(steps);
-    
-
-  
-  //Serial.print("\t");
-
-
-//  Serial.println(myIMU.readAccelZ(), 4);
-
-//x = (myIMU.readAccelX(), 4);
-//y = (myIMU.readAccelY(), 4);
-//z = (myIMU.readAccelZ(), 4);
-//
-//Serial.print(x);
-//Serial.print("\t");
-//
-//Serial.print(y);
-//Serial.print("\t");
-//
-//Serial.println(z);
-
+ Serial.print("\t");
+ Serial.println(steps);    
 
   delay(100);
+ 
 }
