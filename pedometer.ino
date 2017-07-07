@@ -17,17 +17,14 @@ LSM303C myIMU;
 float x, y, z, w; 
 int steps, flag; //flag; // 
 float threshold = 900;
+float thresholdPace = 0.003;
 
 long MeasurePeriod = 3000; 
 unsigned long startTime = millis() ;   
 unsigned long endTime = millis(); 
-//unsigned long steps;  
-//unsigned long stepsOld = 0;
-//unsigned long stepsNew;  
 int stepsOld = 0;
 int stepsNew; 
 float paceAve, timer, pacer; 
-
 
 void setup()
 {
@@ -96,29 +93,15 @@ Serial.print("\t");
  Serial.print("\t");
  Serial.print(steps);    
 
-  delay(100);
+  //delay(100);
 
   // ********************************************
 
-  
-//   MeasurePeriod = long(3000); 
-//   stepsOld = 0;
-//   startTime = millis() ;         // record the operation start time
-
    if ((millis() - startTime) > MeasurePeriod)
    {
-     stepsNew = steps;
-
-//   Serial.print("\t");
-//   Serial.print(stepsOld); 
-//   Serial.print("\t");
-//   Serial.print(stepsNew);
-     
-     endTime = millis();
-     
-//     timer = float(endTime - startTime);
-//     pacer = float(stepsNew - stepsOld);
-     paceAve = float(stepsNew - stepsOld)/ float(endTime - startTime); //pacer/timer;//timer/pacer;
+     stepsNew = steps;   
+     endTime = millis();     
+     paceAve = float(stepsNew - stepsOld)/ float(endTime - startTime); 
      stepsOld = steps;
      startTime = millis();    
    }
@@ -126,13 +109,12 @@ Serial.print("\t");
    Serial.print("\t");
    Serial.println(paceAve, 6); 
 
-   if (paceAve > 0.0005)
+   if (paceAve > thresholdPace)
    {
-     strip.setPixelColor(0, 0, 255, 0);
+    strip.setPixelColor(0, 0, 255, 0);
     strip.show();
     delay(200);
-   }
-   
+   }  
  
  
 }
