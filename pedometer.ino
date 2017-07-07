@@ -50,59 +50,61 @@ Serial.print(y);
 Serial.print("\t");
 Serial.print(z);
 Serial.print("\t");
-Serial.print(w);
+Serial.println(w);
 
-  if (w>threshold && flag==0)
-  {
-    steps=steps+1;
-    
-    flag=1;  
+delay(100);
 
-     // light ON
-    strip.setPixelColor(0, 255, 0, 0);
-    strip.show();
-    delay(200);
-    // light OFF
-    strip.setPixelColor(0, 0, 0, 0);
-    strip.show();       
-  }
-  
-   else if (w > threshold && flag==1)
-  {
-    //do nothing 
-  }
-  
-  if (w <threshold  && flag==1)
-  {
-    flag=0;
-  }
+//  if (w>threshold && flag==0)
+//  {
+//    steps=steps+1;
+//    
+//    flag=1;  
+//
+//     // light ON
+//    strip.setPixelColor(0, 255, 0, 0);
+//    strip.show();
+//    delay(200);
+//    // light OFF
+//    strip.setPixelColor(0, 0, 0, 0);
+//    strip.show();       
+//  }
+//  
+//   else if (w > threshold && flag==1)
+//  {
+//    //do nothing 
+//  }
+//  
+//  if (w <threshold  && flag==1)
+//  {
+//    flag=0;
+//  }
+//
+// Serial.print("\t");
+// Serial.println(steps); 
+// delay(100);   
 
- Serial.print("\t");
- Serial.print(steps); 
- delay(100);   
-
-
-
-  // ********************************************
-
-   if ((millis() - startTime) > MeasurePeriod)
-   {
-     stepsNew = steps;   
-     endTime = millis();     
-     paceAve = float(stepsNew - stepsOld)/ float(endTime - startTime); 
-     stepsOld = steps;
-     startTime = millis();    
-   }
-
-   Serial.print("\t");
-   Serial.println(paceAve, 6); 
-
-   if (paceAve > thresholdPace)
-   {
-    strip.setPixelColor(0, 0, 255, 0);
-    strip.show();
-    delay(200);
-   }  
+//
+//
+//  // ********************************************
+//
+//   if ((millis() - startTime) > MeasurePeriod)
+//   {
+//     stepsNew = steps;   
+//     endTime = millis();     
+//     paceAve = float(stepsNew - stepsOld)/ float(endTime - startTime); 
+//     stepsOld = steps;
+//     startTime = millis();    
+//   }
+//
+//   Serial.print("\t");
+//   Serial.println(paceAve, 6); 
+//
+//   if (paceAve > thresholdPace)
+//   {
+//    strip.setPixelColor(0, 0, 255, 0);
+//    strip.show();
+//    delay(200);
+//   }  
  
  
 }
