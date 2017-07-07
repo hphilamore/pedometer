@@ -10,10 +10,13 @@
 
 LSM303C myIMU;
 
-float x; 
-float y; 
-float z; 
-float w;
+int steps, flag;
+float x, y, z, w; 
+float threshold = 900;
+
+//float y; 
+//float z; 
+//float w;
 
 void setup()
 {
@@ -23,6 +26,8 @@ void setup()
     Serial.println("Failed setup.");
     while(1);
   }
+  
+  pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop()
@@ -48,7 +53,35 @@ Serial.print("\t");
 Serial.print("\t");
  Serial.print(z);
 Serial.print("\t");
-  Serial.println(w);
+  Serial.print(w);
+  Serial.print("\t");
+
+
+  if (w>threshold && flag==0)
+  {
+    steps=steps+1;
+    flag=1;  
+    digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+    delay(200);                       // wait for a second
+    digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+    //delay(200);        
+  }
+   else if (w > threshold && flag==1)
+  {
+    //do nothing 
+  }
+  
+  if (w <threshold  && flag==1)
+  {
+    flag=0;
+  }
+
+     Serial.println(steps);
+     
+//    Serial.println('\n');
+//    Serial.print("steps=");
+//    Serial.println(steps);
+    
 
   
   //Serial.print("\t");
