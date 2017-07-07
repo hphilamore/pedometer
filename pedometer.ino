@@ -10,10 +10,10 @@
 
 LSM303C myIMU;
 
-float Xacc;
-float Yacc;
-float Zacc;
-float vector;
+float x; 
+float y; 
+float z; 
+float w;
 
 void setup()
 {
@@ -27,23 +27,47 @@ void setup()
 
 void loop()
 {
+x = float((myIMU.readAccelX()));
+y = float((myIMU.readAccelY()));
+z = float((myIMU.readAccelZ()));
+w = sqrt(sq(x)+sq(y)+sq(z));
 
-Xacc = (myIMU.readAccelX(), 4);
-Yacc = (myIMU.readAccelY(), 4);
-Zacc = (myIMU.readAccelZ(), 4);
-vector = sqrt(sq(Xacc) + sq(Yacc) + sq(Zacc));
 
-//Serial.print("\nAccelerometer:\n");
+  //Serial.print("\t");
+  //x = 1;
 
-Serial.print(myIMU.readAccelX(), 4);
-Serial.print("\t");
-Serial.print(myIMU.readAccelY(), 4);
-Serial.print("\t");
-Serial.print(myIMU.readAccelZ(), 4);
-Serial.print("\t");
-Serial.println(vector);
+//  Serial.print(myIMU.readAccelX(), 4);
 //Serial.print("\t");
+//
+//  Serial.print(myIMU.readAccelY(), 4);
+//  Serial.print("\t");
+ 
+ Serial.print(x);
+Serial.print("\t");
+ Serial.print(y);
+Serial.print("\t");
+ Serial.print(z);
+Serial.print("\t");
+  Serial.println(w);
 
   
-  delay(10);
+  //Serial.print("\t");
+
+
+//  Serial.println(myIMU.readAccelZ(), 4);
+
+//x = (myIMU.readAccelX(), 4);
+//y = (myIMU.readAccelY(), 4);
+//z = (myIMU.readAccelZ(), 4);
+//
+//Serial.print(x);
+//Serial.print("\t");
+//
+//Serial.print(y);
+//Serial.print("\t");
+//
+//Serial.println(z);
+
+
+  delay(100);
 }
